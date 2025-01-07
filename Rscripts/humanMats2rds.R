@@ -2,7 +2,6 @@
 library(Seurat)
 input <- 'human.matrix.csv'
 metafile <- 'humna.metadata.csv'
-setwd('/proj/gs25/users/Jesse/Nicole110724/Human')
 s <- read.table(input,sep=',',row.names=1,header=T)
 s <- t(s)
 meta <- read.csv(metafile,header=T,row.names=1)
