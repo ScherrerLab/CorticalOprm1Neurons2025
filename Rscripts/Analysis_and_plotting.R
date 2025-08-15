@@ -10,7 +10,7 @@ library(dendextend)
 library(scCustomize)
 library(dittoSeq)
 library(patchwork)
-
+#preprocess data for comparable UMAPs and isolate z-scored log1p count data (scale)
 huaca=readRDS('Human/ACA_AIBSsubclass.rds')
 huss <- readRDS('Human/SS_AIBSsubclass.rds')
 huaca=FindVariableFeatures(huaca,nfeatures = 3000) %>% NormalizeData() %>% ScaleData() %>% RunPCA(npcs=10) %>% RunUMAP(dims=1:10)
@@ -28,7 +28,7 @@ msaca$full_genotype <- metaaca$full_genotype
 msss$full_genotype <- metass$full_genotype
 msaca <- FindVariableFeatures(msaca,nfeatures = 3000) %>% NormalizeData() %>% ScaleData() %>% RunPCA(npcs=10) %>% RunUMAP(dims=1:10)
 msss <- FindVariableFeatures(msss,nfeatures = 3000) %>% NormalizeData() %>% ScaleData() %>% RunPCA(npcs=10) %>% RunUMAP(dims=1:10)
-
+#plot umaps
 p1 <- DimPlot_scCustom(msaca,pt.size = .1,label=F) + NoAxes() + ggtitle(label = 'Mouse ACA') + theme(plot.title = element_text(hjust = 0.5))
 p2 <- DimPlot_scCustom(msss,pt.size = .1,label=F) + NoAxes() + ggtitle(label = 'Mouse SSp') + theme(plot.title = element_text(hjust = 0.5))
 h1 <- DimPlot_scCustom(huaca,pt.size = .1,label=F) + NoAxes() + ggtitle(label = 'Human ACA') + theme(plot.title = element_text(hjust = 0.5))
@@ -39,7 +39,7 @@ dev.off()
 #of all Excitatory (e.g. Slc17a7+, Slc17a6, anud Snap25 + Slc17a7+ neurons that express Oprm1, what percent are IT/PT/CT/
 #msacaExcit <- subset
 
-#temp
+#Get centroids
 hgacaavg=AverageExpression(huaca,slot = 'scale.data')
 hgacaavg=hgacaavg$RNA
 hgssavg=AverageExpression(huss,slot = 'scale.data')
